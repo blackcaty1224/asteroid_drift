@@ -256,9 +256,9 @@ function loop(){
                 }
                 if (camX ** 2 + camY ** 2 >= 9303500) {
                     cleaetime = Date.now() - starttime;
-                    scoretime = (50000 - cleaetime) / 100 + basescore;
+                    scoretime = (60000 - cleaetime) / 1000 + basescore;
                     console.log(Date.now() - starttime);
-                    lastscore = Math.floor(scoretime * (1 + fuel / 2000));
+                    lastscore = Math.floor(scoretime * (fuel / 100));
                     gameClear = true;
                 }
             }
