@@ -189,9 +189,9 @@ function loop(){
                 drawGalaxy();
                 g.rect(0, 0, 800, 600, "rgba(0, 50, 100, 0.3)", "true");
                 let rank = "C";
-                if (lastscore > 2000) rank = "S";
-                else if (lastscore > 1500) rank = "A";
-                else if (lastscore > 1100) rank = "B";
+                if (lastscore > 8000) rank = "S";
+                else if (lastscore > 4000) rank = "A";
+                else if (lastscore > 2000) rank = "B";
                 g.fText("MISSION COMPLETE", 400, 150, "#ffff00", 50, "center");
                 g.fText("無事に小惑星群を突破しました！", 400, 200, "#ffffff", 20, "center");
                 g.rect(200, 230, 400, 180, "rgba(255, 255, 255, 0.1)", "true");
