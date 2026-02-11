@@ -213,9 +213,10 @@ function loop(){
                 drawGalaxy();
                 g.rect(0, 0, 800, 600, "rgba(0, 50, 100, 0.3)", "true");
                 let rank = "C";
-                if (lastscore > 2000) rank = "S";
-                else if (lastscore > 1500) rank = "A";
-                else if (lastscore > 1100) rank = "B";
+                if(lastscore > 10000) rank = "SS";
+                else if (lastscore > 8000) rank = "S";
+                else if (lastscore > 400) rank = "A";
+                else if (lastscore > 200) rank = "B";
                 g.fText("MISSION COMPLETE", 400, 150, "#ffff00", 50, "center");
                 g.fText("無事に小惑星群を突破しました！", 400, 200, "#ffffff", 20, "center");
                 g.rect(200, 230, 400, 180, "rgba(255, 255, 255, 0.1)", "true");
@@ -280,11 +281,11 @@ function loop(){
                 }
                 if (camX ** 2 + camY ** 2 >= 9303500) {
                     cleaetime = Date.now() - starttime;
-                    scoretime = (50000 - cleaetime) / 100 + basescore;
+                    scoretime = (60000 - cleaetime) / 1000 + basescore;
                     console.log(Date.now() - starttime);
-                    lastscore = Math.floor(scoretime * (1 + fuel / 2000));
+                    lastscore = Math.floor(scoretime * (fuel / 100));
                     gameClear = true;
-                    const playerName = prompt("名前を入力してください", "PILOT");
+                    const playerName = prompt("名前を入力してください", "noname");
                     sendScore(playerName || "ANON", lastscore);
                 }
             }
