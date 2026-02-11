@@ -292,7 +292,7 @@ function loop(){
     }
     g.rect(800, 0, 200, 600, "#1a1a2e", "true");
     g.line(800, 0, 800, 600, "#000000", 4);
-    g.fText("TOP RANKERS", 900, 50, "#00f0ff", 20, "center");
+    g.fText("ランキング", 900, 50, "#00f0ff", 20, "center");
     rankingData.forEach((data, i) => {
         const y = 100 + (i * 40);
         const color = i === 0 ? "#ffff00" : "#ffffff";
