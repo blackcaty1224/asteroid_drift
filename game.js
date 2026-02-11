@@ -2,7 +2,7 @@ const g = new MiniGameEngine();
 let gameStarted = false;
 let gameOver = false;
 let gameClear = false;
-const GAS_URL = "https://script.google.com/macros/s/AKfycby0KIKvRdVO1KrqRNW1U_5LIEi4kW5hO3QSaahCd0rK-Jir5AdH3eXWcUlDpLvDrckX7A/exec;
+const GAS_URL = "https://script.google.com/macros/s/AKfycby0KIKvRdVO1KrqRNW1U_5LIEi4kW5hO3QSaahCd0rK-Jir5AdH3eXWcUlDpLvDrckX7A/exec";
 let rankingData = [];
 async function fetchRanking() {
     try {
