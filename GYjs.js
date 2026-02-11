@@ -4,7 +4,6 @@
 使用するときはクレジット表記と使用報告をしてね。
 メールアドレス : blackcaty1224@icloud.com
 製作者 黒猫Y.M.
-このプログラムは製作者によって少し改変されています。
 */
 class MiniGameEngine {
     constructor() {
@@ -29,7 +28,7 @@ class MiniGameEngine {
         this.debugMode = false;
         this.init();
     }
- 
+
     init() {
         window.addEventListener('resize', () => this.resize());
         this.resize();
@@ -54,7 +53,7 @@ class MiniGameEngine {
             else { if(this.bgm) this.bgm.play(); }
         });
     }
- 
+
     resize() {
         const winW = window.innerWidth;
         const winH = window.innerHeight;
@@ -68,7 +67,7 @@ class MiniGameEngine {
         this.canvas.height = this.vHeight;
         this.screenScale = w / 1000;
     }
- 
+
     line(x1, y1, x2, y2, col, w=1) {
         this.ctx.strokeStyle = col;
         this.ctx.lineWidth = w;
@@ -97,14 +96,14 @@ class MiniGameEngine {
         const lines = txt.split('\n');
         lines.forEach((line, i) => this.fText(line, x, y + (i * lineH), col, size));
     }
- 
+
     async loadImg(name, src) {
         return new Promise(res => {
             const img = new Image();
             img.src = src;
-            img.onload = () => {
+            img.onload = () => { 
                 this.images[name] = img;
-                res(img);
+                res(img); 
             };
         });
     }

@@ -1,3 +1,4 @@
+
 const g = new MiniGameEngine();
 let gameStarted = false;
 let gameOver = false;
@@ -39,7 +40,7 @@ function createPlanetTexture(p) {
     ctx.arc(center, center, p.r, 0, Math.PI * 2);
     ctx.fillStyle = p.baseColor;
     ctx.fill();
-    const step = 2;
+    const step = 2; 
     for (let py = -p.r; py < p.r; py += step) {
         for (let px = -p.r; px < p.r; px += step) {
             if (px * px + py * py <= p.r * p.r) {
@@ -71,7 +72,7 @@ function createGalaxy() {
     planets = [];
     const targetCount = 300;
     const minDistance = 100;  
-    const spawnRadius = 3000;
+    const spawnRadius = 3000; 
     const safeZoneRadius = 100;
     for (let i = 0; i < targetCount; i++) {
         let success = false;
@@ -282,9 +283,9 @@ function loop(){
                     scoretime = (50000 - cleaetime) / 100 + basescore;
                     console.log(Date.now() - starttime);
                     lastscore = Math.floor(scoretime * (1 + fuel / 2000));
+                    gameClear = true;
                     const playerName = prompt("名前を入力してください", "PILOT");
                     sendScore(playerName || "ANON", lastscore);
-                    gameClear = true;
                 }
             }
         }
