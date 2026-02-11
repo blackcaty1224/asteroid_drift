@@ -2,6 +2,28 @@ const g = new MiniGameEngine();
 let gameStarted = false;
 let gameOver = false;
 let gameClear = false;
+const GAS_URL = "https://script.google.com/macros/s/AKfycby0KIKvRdVO1KrqRNW1U_5LIEi4kW5hO3QSaahCd0rK-Jir5AdH3eXWcUlDpLvDrckX7A/exec%22;
+let rankingData = [];
+async function fetchRanking() {
+    try {
+        const res = await fetch(GAS_URL, {
+            method: "GET",
+            mode: "cors",
+            redirect: "follow"
+        });
+        if (!res.ok) throw new Error("Network response was not ok");
+        rankingData = await res.json();
+    } catch (e) {
+        console.error("ランキング取得失敗:", e);
+    }
+}
+async function sendScore(name, score) {
+    await fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ name: name, score: score })
+    });
+    fetchRanking();
+}
 function noise(x, y, seed) {
     const n = Math.sin(x * 12.9898 + y * 78.233 + seed) * 43758.5453123;
     return n - Math.floor(n);
@@ -17,7 +39,7 @@ function createPlanetTexture(p) {
     ctx.arc(center, center, p.r, 0, Math.PI * 2);
     ctx.fillStyle = p.baseColor;
     ctx.fill();
-    const step = 2; 
+    const step = 2;
     for (let py = -p.r; py < p.r; py += step) {
         for (let px = -p.r; px < p.r; px += step) {
             if (px * px + py * py <= p.r * p.r) {
@@ -49,7 +71,7 @@ function createGalaxy() {
     planets = [];
     const targetCount = 300;
     const minDistance = 100;  
-    const spawnRadius = 3000; 
+    const spawnRadius = 3000;
     const safeZoneRadius = 100;
     for (let i = 0; i < targetCount; i++) {
         let success = false;
@@ -128,6 +150,7 @@ function setup(){
     g.loadImg("rocket", "images/rocket_01.png");
     g.loadSound("bgm","sounds/エッジワース・カイパーベルト_2.mp3")
     createGalaxy();
+    fetchRanking();
 }
 function loop(){
     g.rect(0,0,800,600,"#0d0621","true")
@@ -189,9 +212,9 @@ function loop(){
                 drawGalaxy();
                 g.rect(0, 0, 800, 600, "rgba(0, 50, 100, 0.3)", "true");
                 let rank = "C";
-                if (lastscore > 8000) rank = "S";
-                else if (lastscore > 4000) rank = "A";
-                else if (lastscore > 2000) rank = "B";
+                if (lastscore > 2000) rank = "S";
+                else if (lastscore > 1500) rank = "A";
+                else if (lastscore > 1100) rank = "B";
                 g.fText("MISSION COMPLETE", 400, 150, "#ffff00", 50, "center");
                 g.fText("無事に小惑星群を突破しました！", 400, 200, "#ffffff", 20, "center");
                 g.rect(200, 230, 400, 180, "rgba(255, 255, 255, 0.1)", "true");
@@ -256,13 +279,24 @@ function loop(){
                 }
                 if (camX ** 2 + camY ** 2 >= 9303500) {
                     cleaetime = Date.now() - starttime;
-                    scoretime = (60000 - cleaetime) / 1000 + basescore;
+                    scoretime = (50000 - cleaetime) / 100 + basescore;
                     console.log(Date.now() - starttime);
-                    lastscore = Math.floor(scoretime * (fuel / 100));
+                    lastscore = Math.floor(scoretime * (1 + fuel / 2000));
+                    const playerName = prompt("名前を入力してください", "PILOT");
+                    sendScore(playerName || "ANON", lastscore);
                     gameClear = true;
                 }
             }
         }
     }
+    g.rect(800, 0, 200, 600, "#1a1a2e", "true");
+    g.line(800, 0, 800, 600, "#000000", 4);
+    g.fText("TOP RANKERS", 900, 50, "#00f0ff", 20, "center");
+    rankingData.forEach((data, i) => {
+        const y = 100 + (i * 40);
+        const color = i === 0 ? "#ffff00" : "#ffffff";
+        g.fText(`${i + 1}. ${data[0]}`, 820, y, color, 16, "left");
+        g.fText(`${data[1]}`, 980, y, color, 16, "right");
+    });
 }
 g.start(setup, loop);
